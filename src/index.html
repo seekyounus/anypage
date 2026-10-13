@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AnyPage</title>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/viewers.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <header class="topbar">
+    <div class="brand" aria-label="AnyPage">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 2.5h8.5L19 7v13.5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-17a1 1 0 0 1 1-1Z" fill="var(--paper)" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M14.5 2.5V7H19" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M8 11h8M8 14h8M8 17h5" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-name">AnyPage</span>
+    </div>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Open files"></nav>
+    <div class="topbar-actions">
+      <button class="btn btn-primary" id="open-btn" type="button" title="Open files (Ctrl+O)">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5.5A1.5 1.5 0 0 1 4.5 4h3.6l1.6 1.8h5.8A1.5 1.5 0 0 1 17 7.3v7.2a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 3 14.5v-9Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span>Open</span>
+      </button>
+      <input type="file" id="file-input" multiple hidden>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar" hidden></div>
+
+  <main class="stage" id="stage">
+    <section class="welcome" id="welcome">
+      <div class="welcome-inner">
+        <div class="dropzone" id="dropzone">
+          <div class="icon-fan" aria-hidden="true">
+            <span data-icon="sheet" data-ext=".xlsx"></span>
+            <span data-icon="pdf" data-ext=".pdf"></span>
+            <span data-icon="doc" data-ext=".docx"></span>
+          </div>
+          <h1 class="wordmark"><span class="wm-any">Any</span><span class="wm-page">Page</span></h1>
+          <p class="tagline">PDF, Word, Excel, text and images in one free app.</p>
+          <p>Drop files here or choose them. No ads, no account, and your files never leave this device.</p>
+          <button class="btn btn-primary btn-lg" id="welcome-open" type="button">Choose files</button>
+        </div>
+
+        <div class="formats" aria-label="Supported formats">
+          <div class="format-group">
+            <h2><span data-icon="pdf" data-size="sm"></span>Documents</h2>
+            <p><span class="chip">PDF</span><span class="chip">Word .docx</span></p>
+          </div>
+          <div class="format-group">
+            <h2><span data-icon="sheet" data-size="sm"></span>Spreadsheets</h2>
+            <p><span class="chip">Excel .xlsx</span><span class="chip">.csv</span><span class="chip">.tsv</span></p>
+          </div>
+          <div class="format-group">
+            <h2><span data-icon="code" data-size="sm"></span>Text and code</h2>
+            <p><span class="chip">.txt</span><span class="chip">.log</span><span class="chip">.json</span><span class="chip">.xml</span><span class="chip">.sql</span><span class="chip">.py</span><span class="chip">.js</span><span class="chip">.md</span><span class="chip chip-more">+50 more</span></p>
+          </div>
+          <div class="format-group">
+            <h2><span data-icon="img" data-size="sm"></span>Images</h2>
+            <p><span class="chip">.jpg</span><span class="chip">.png</span><span class="chip">.webp</span><span class="chip">.gif</span><span class="chip">.svg</span><span class="chip">.bmp</span></p>
+          </div>
+        </div>
+
+        <div class="samples">
+          <h2>No file handy? Try a sample</h2>
+          <div class="sample-row" id="sample-row">
+            <button class="sample" type="button" data-sample="Quarterly Report.pdf"><span data-icon="pdf" data-ext=".pdf"></span><span class="sample-text"><span class="sample-name">Quarterly Report.pdf</span><span class="sample-desc">PDF · 3 pages</span></span></button>
+            <button class="sample" type="button" data-sample="Meeting Notes.docx"><span data-icon="doc" data-ext=".docx"></span><span class="sample-text"><span class="sample-name">Meeting Notes.docx</span><span class="sample-desc">Word document</span></span></button>
+            <button class="sample" type="button" data-sample="Sales 2026.xlsx"><span data-icon="sheet" data-ext=".xlsx"></span><span class="sample-text"><span class="sample-name">Sales 2026.xlsx</span><span class="sample-desc">Excel · 3 sheets</span></span></button>
+            <button class="sample" type="button" data-sample="monthly_sales.sql"><span data-icon="code" data-ext=".sql"></span><span class="sample-text"><span class="sample-name">monthly_sales.sql</span><span class="sample-desc">SQL script</span></span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="views" id="views"></div>
+  </main>
+
+  <footer class="statusbar" id="statusbar">
+    <span id="status-text">Ready</span>
+    <span class="status-right">Offline · no ads</span>
+  </footer>
+
+  <div class="drop-overlay" id="drop-overlay" hidden><div>Drop to open</div></div>
+</div>
+
+<script src="js/config.js" id="libs-config"></script>
+<script src="vendor/jszip.min.js" data-cdn="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="vendor/docx-preview.min.js" data-cdn="https://cdn.jsdelivr.net/npm/docx-preview@0.4.0/dist/docx-preview.min.js"></script>
+<script src="vendor/highlight/highlight.min.js" data-cdn="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+<script src="js/core.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/viewers/text.js"></script>
+<script src="js/viewers/image.js"></script>
+<script src="js/viewers/pdf.js"></script>
+<script src="js/viewers/docx.js"></script>
+<script src="js/viewers/sheet.js"></script>
+<script src="js/app.js"></script>
+<script src="js/platform.js"></script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+/* Styles for each viewer. Paper colours stay light in both themes. */
+
+/* ---------- text and code ---------- */
+.code-view {
+  --code-size: 13.5px;
+  display: flex;
+  min-height: 100%;
+  min-width: max-content;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  font: var(--code-size)/1.55 var(--font-mono);
+  tab-size: 4;
+}
+.code-gutter, .code-pre {
+  margin: 0;
+  padding: 12px 0 24px;
+  font: inherit;
+}
+.code-gutter {
+  position: sticky;
+  left: 0;
+  padding-inline: 12px 10px;
+  text-align: right;
+  color: var(--code-gutter);
+  background: var(--code-bg);
+  border-right: 1px solid var(--line);
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+  z-index: 1;
+}
+.code-pre { padding-inline: 14px 24px; white-space: pre; }
+.code-pre code { font: inherit; background: none; padding: 0; }
+.code-view.is-wrapped { min-width: 0; }
+.code-view.is-wrapped .code-gutter { display: none; }
+.code-view.is-wrapped .code-pre { white-space: pre-wrap; overflow-wrap: anywhere; flex: 1; min-width: 0; }
+
+/* syntax colours (highlight.js classes) */
+.hljs-keyword, .hljs-selector-tag, .hljs-built_in, .hljs-literal, .hljs-type, .hljs-doctag, .hljs-meta .hljs-keyword { color: var(--code-keyword); }
+.hljs-string, .hljs-regexp, .hljs-addition, .hljs-meta .hljs-string, .hljs-template-tag { color: var(--code-string); }
+.hljs-number, .hljs-symbol, .hljs-bullet, .hljs-variable.constant_, .hljs-link { color: var(--code-number); }
+.hljs-comment, .hljs-quote, .hljs-meta { color: var(--code-comment); font-style: italic; }
+.hljs-title, .hljs-section, .hljs-title.function_, .hljs-name, .hljs-selector-id, .hljs-selector-class { color: var(--code-title); }
+.hljs-attr, .hljs-attribute, .hljs-property, .hljs-variable, .hljs-template-variable, .hljs-params { color: var(--code-attr); }
+.hljs-deletion { color: var(--danger); }
+.hljs-strong, .hljs-section { font-weight: 650; }
+.hljs-emphasis { font-style: italic; }
+
+/* ---------- images ---------- */
+.img-view {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+.img-frame {
+  line-height: 0;
+  box-shadow: var(--shadow);
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, #e6e9ee 25%, transparent 25%),
+    linear-gradient(-45deg, #e6e9ee 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e6e9ee 75%),
+    linear-gradient(-45deg, transparent 75%, #e6e9ee 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+.img-el { display: block; max-width: none; image-rendering: auto; }
+
+/* ---------- PDF ---------- */
+.pdf-pages {
+  --scale-factor: 1;
+  --total-scale-factor: 1;
+  --user-unit: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 20px 40px;
+  min-width: max-content;
+}
+.pdf-page {
+  position: relative;
+  width: calc(var(--w) * var(--scale-factor) * 1px);
+  height: calc(var(--h) * var(--scale-factor) * 1px);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  flex: none;
+}
+.pdf-canvas { display: block; width: 100%; height: 100%; }
+.pdf-links { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.pdf-links a { position: absolute; pointer-events: auto; border-radius: 2px; }
+.pdf-links a:hover { background: rgba(40, 86, 196, 0.12); outline: 1px solid rgba(40, 86, 196, 0.4); }
+.pdf-page-error { display: grid; place-items: center; height: 100%; color: #8a3030; font-size: 13px; }
+.tool-of { min-width: 0; text-align: left; }
+
+/* pdf.js text layer: invisible text over the page so it can be selected and copied */
+.textLayer {
+  position: absolute; inset: 0; overflow: clip; opacity: 1; line-height: 1;
+  text-align: initial; letter-spacing: normal; word-spacing: normal;
+  text-size-adjust: none; -webkit-text-size-adjust: none; forced-color-adjust: none;
+  transform-origin: 0 0; caret-color: CanvasText; z-index: 0;
+  --min-font-size: 1;
+  --text-scale-factor: calc(var(--total-scale-factor) * var(--min-font-size));
+  --min-font-size-inv: calc(1 / var(--min-font-size));
+}
+.textLayer :is(span, br) {
+  color: transparent; position: absolute; white-space: pre; cursor: text;
+  transform-origin: 0% 0%; user-select: text;
+}
+.textLayer > :not(.markedContent), .textLayer .markedContent span:not(.markedContent) {
+  z-index: 1;
+  --font-height: 0;
+  font-size: calc(var(--text-scale-factor) * var(--font-height));
+  --scale-x: 1;
+  --rotate: 0deg;
+  transform: rotate(var(--rotate)) scaleX(var(--scale-x)) scale(var(--min-font-size-inv));
+}
+.textLayer .markedContent { display: contents; }
+.textLayer span[role="img"] { user-select: none; cursor: default; }
+.textLayer ::selection { background: rgba(40, 86, 196, 0.3); color: transparent; }
+.textLayer br::selection { background: transparent; }
+.textLayer .endOfContent { display: block; position: absolute; inset: 100% 0 0; z-index: 0; cursor: default; user-select: none; }
+.textLayer.selecting .endOfContent { top: 0; }
+
+/* ---------- Word ---------- */
+.docx-styles { display: none; }
+.docx-zoom { width: max-content; min-width: 100%; }
+.docx-host .docx-wrapper {
+  background: transparent !important;
+  padding: 20px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.docx-host .docx-wrapper > section.docx {
+  margin: 0 !important;
+  box-shadow: var(--shadow) !important;
+  background: var(--paper);
+  color: var(--paper-fg);
+}
+
+/* ---------- spreadsheets ---------- */
+.view.view-fill { overflow: hidden; }
+.sheet-view { display: flex; flex-direction: column; height: 100%; }
+.sheet-scroll {
+  --sheet-zoom: 1;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0;
+}
+.sheet-paper { width: max-content; min-width: 100%; background: var(--paper); zoom: var(--sheet-zoom); }
+.sheet-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  width: max-content;
+  font: 13px/1.35 var(--font-ui);
+  color: var(--paper-fg);
+  background: var(--paper);
+  font-variant-numeric: tabular-nums;
+}
+.sheet-table col.rowhead-col { width: 52px; }
+.sheet-table th, .sheet-table td {
+  border-right: 1px solid var(--paper-line);
+  border-bottom: 1px solid var(--paper-line);
+  padding: 2px 5px;
+  height: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  vertical-align: bottom;
+  text-align: left;
+}
+.sheet-table td.num { text-align: right; }
+.sheet-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--paper-head);
+  color: var(--paper-head-fg);
+  font-weight: 500;
+  text-align: center;
+  font-size: 12px;
+  border-bottom-color: #c9cfd8;
+}
+.sheet-table tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--paper-head);
+  color: var(--paper-head-fg);
+  font-weight: 500;
+  text-align: center;
+  font-size: 12px;
+  border-right-color: #c9cfd8;
+}
+.sheet-table thead th.corner { left: 0; z-index: 3; }
+.sheet-more { margin: 12px 16px 24px; }
+.sheet-note { margin: 10px 16px; color: var(--muted); font-size: 12.5px; }
+.sheet-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 0 8px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  overflow-x: auto;
+  flex: none;
+}
+.sheet-tab {
+  border: 1px solid transparent;
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: transparent;
+  color: var(--muted);
+  padding: 5px 14px 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-top: -1px;
+}
+.sheet-tab:hover { color: var(--fg); background: var(--surface-2); }
+.sheet-tab[aria-selected="true"] {
+  background: var(--paper);
+  color: #1f7a4a;
+  border-color: var(--line);
+  font-weight: 600;
+  box-shadow: inset 0 2px 0 #1f7a4a;
+}

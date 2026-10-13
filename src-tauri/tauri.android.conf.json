@@ -1,0 +1,14 @@
+{
+  "bundle": {
+    "fileAssociations": [
+      { "ext": ["pdf"], "mimeType": "application/pdf", "role": "Viewer" },
+      { "ext": ["docx"], "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "role": "Viewer" },
+      { "ext": ["xlsx"], "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "role": "Viewer" },
+      { "ext": ["txt", "csv", "tsv", "log", "md", "sql", "xml"], "mimeType": "text/*", "role": "Viewer" },
+      { "ext": ["json"], "mimeType": "application/json", "role": "Viewer" },
+      { "ext": ["xml"], "mimeType": "application/xml", "role": "Viewer" },
+      { "ext": ["sql"], "mimeType": "application/sql", "role": "Viewer" },
+      { "ext": ["jpg", "png", "webp", "gif", "bmp", "svg"], "mimeType": "image/*", "role": "Viewer" }
+    ]
+  }
+}

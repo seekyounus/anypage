@@ -1,0 +1,14 @@
+{
+  "name": "anypage",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Free, ad-free document reader for Windows and Android",
+  "scripts": {
+    "tauri": "tauri",
+    "preview": "python3 tools/build_preview.py",
+    "samples": "python3 tools/make_samples.py"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

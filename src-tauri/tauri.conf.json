@@ -1,0 +1,68 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "AnyPage",
+  "version": "0.1.0",
+  "identifier": "io.github.seekyounus.anypage",
+  "build": {
+    "frontendDist": "../src"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "AnyPage",
+        "width": 1200,
+        "height": 820,
+        "minWidth": 360,
+        "minHeight": 480,
+        "dragDropEnabled": false
+      }
+    ],
+    "security": {
+      "csp": {
+        "default-src": "'self'",
+        "script-src": "'self' 'wasm-unsafe-eval'",
+        "style-src": "'self' 'unsafe-inline'",
+        "img-src": "'self' data: blob:",
+        "font-src": "'self' data: blob:",
+        "connect-src": "'self' ipc: http://ipc.localhost",
+        "worker-src": "'self' blob:",
+        "object-src": "'none'",
+        "frame-src": "'none'",
+        "base-uri": "'none'"
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "publisher": "AnyPage",
+    "homepage": "https://github.com/seekyounus/anypage",
+    "category": "Productivity",
+    "shortDescription": "Free, ad-free document reader",
+    "longDescription": "AnyPage opens PDF, Word, Excel, CSV, text and code files, and images in one free app. No ads, no account, and files never leave your device.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser"
+      }
+    },
+    "fileAssociations": [
+      { "ext": ["pdf"], "name": "PDF document", "description": "PDF document", "mimeType": "application/pdf", "role": "Viewer" },
+      { "ext": ["docx"], "name": "Word document", "description": "Word document", "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "role": "Viewer" },
+      { "ext": ["xlsx"], "name": "Excel workbook", "description": "Excel workbook", "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "role": "Viewer" },
+      { "ext": ["csv", "tsv"], "name": "CSV file", "description": "Comma-separated values", "mimeType": "text/csv", "role": "Viewer" },
+      { "ext": ["txt", "log", "md"], "name": "Text file", "description": "Text file", "mimeType": "text/plain", "role": "Viewer" },
+      { "ext": ["json"], "name": "JSON file", "description": "JSON file", "mimeType": "application/json", "role": "Viewer" },
+      { "ext": ["xml"], "name": "XML file", "description": "XML file", "mimeType": "application/xml", "role": "Viewer" },
+      { "ext": ["sql"], "name": "SQL script", "description": "SQL script", "mimeType": "application/sql", "role": "Viewer" }
+    ]
+  }
+}
