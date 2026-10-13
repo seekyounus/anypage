@@ -75,3 +75,7 @@ npx tauri dev
 | highlight.js | 11.11.1 | BSD-3-Clause |
 
 The Excel and CSV readers are AnyPage's own code.
+
+## Licence
+
+AnyPage is free software under the [GNU General Public License v3.0](LICENSE). You may use, share and change it; if you share a changed version, it must stay open source under the same licence.

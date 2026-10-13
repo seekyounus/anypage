@@ -2,6 +2,7 @@
   "name": "anypage",
   "version": "0.1.0",
   "private": true,
+  "license": "GPL-3.0-only",
   "description": "Free, ad-free document reader for Windows and Android",
   "scripts": {
     "tauri": "tauri",

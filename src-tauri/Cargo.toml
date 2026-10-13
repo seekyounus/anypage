@@ -3,7 +3,7 @@ name = "anypage"
 version = "0.1.0"
 description = "Free, ad-free document reader for Windows and Android"
 edition = "2021"
-license = "MIT"
+license = "GPL-3.0-only"
 repository = "https://github.com/seekyounus/anypage"
 
 [lib]
